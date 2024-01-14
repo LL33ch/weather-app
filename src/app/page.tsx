@@ -3,14 +3,18 @@ import { useEffect, useState } from 'react';
 import { getCurrentWeatherData } from '@/actions/getCurrentWeatherData';
 import CurrentWeather from '@/components/widgets/CurrentWeather';
 import { OpenWeatherData } from '@/lib/types';
-import { Loader2, NavigationOff } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge"
 
 export default function Home() {
   const [currentWeather, setCurrentWeather] = useState<OpenWeatherData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [Geolocation, setGeolocation] = useState<boolean>(false);
-  const savedCoordsString = localStorage.getItem('coords');
+  let savedCoordsString: string | null = null;
+
+  if (typeof window !== 'undefined') {
+    savedCoordsString = localStorage.getItem('coords');
+  }
 
   const fetchData = async (latitude: number, longitude: number) => {
     try {
