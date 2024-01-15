@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
+import Navigation from '@/components/Navigation'
 
 
 export const metadata: Metadata = {
@@ -22,7 +23,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Navigation />
+          <main className="flex-grow">{children}</main>
         </ThemeProvider></body>
     </html>
   )

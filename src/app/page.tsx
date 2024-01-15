@@ -1,78 +1,27 @@
-'use client'
-import { useEffect, useState } from 'react';
 import { getCurrentWeatherData } from '@/actions/getCurrentWeatherData';
+import { getHourlyData } from '@/actions/getHourlyData';
+import AirPollution from '@/components/widgets/AirPollution';
 import CurrentWeather from '@/components/widgets/CurrentWeather';
-import { OpenWeatherData } from '@/lib/types';
-import { Loader2 } from 'lucide-react';
-import { Badge } from "@/components/ui/badge"
+import HourlyForecast from '@/components/widgets/HourlyForecast';
+import { CurrentWeatherData, HourlyForecastData } from '@/lib/types';
 
-export default function Home() {
-  const [currentWeather, setCurrentWeather] = useState<OpenWeatherData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [Geolocation, setGeolocation] = useState<boolean>(false);
-  let savedCoordsString: string | null = null;
+export default async function Home() {
+  const q = 'Краснодар'
 
-  if (typeof window !== 'undefined') {
-    savedCoordsString = localStorage.getItem('coords');
-  }
+  const CurrentWeatherDataRequest: CurrentWeatherData = await getCurrentWeatherData({ q })
+  const HourlyForecastDataRequest: HourlyForecastData = await getHourlyData({ q });
 
-  const fetchData = async (latitude: number, longitude: number) => {
-    try {
-      const currentWeatherDataRequest: OpenWeatherData = await getCurrentWeatherData({
-        lat: String(latitude),
-        lon: String(longitude),
-      });
-      setIsLoading(false);
-      setCurrentWeather(currentWeatherDataRequest);
-    } catch (error) {
-      console.error('Error fetching data', error);
-    }
-  };
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setGeolocation(true);
-          const { latitude, longitude } = position.coords;
-          const coordsString = `${latitude},${longitude}`;
-
-          localStorage.setItem('coords', coordsString);
-          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-          fetchData(latitude, longitude);
-        },
-        (error) => {
-          console.error('Error getting geolocation:', error.message);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-    }
-  }, []);
-
-  if (savedCoordsString) {
-    const [savedLatitude, savedLongitude] = savedCoordsString.split(',');
-    const latitude = parseFloat(savedLatitude);
-    const longitude = parseFloat(savedLongitude);
-
-    // Если координаты уже есть в localStorage, используем их для запроса данных
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-    fetchData(latitude, longitude);
-  }
-
+  const [current_weather, hourly_data] = await Promise.all([CurrentWeatherDataRequest, HourlyForecastDataRequest])
 
   return (
-    <main className="grid place-items-center min-h-screen">
-      {isLoading && (
-        <Loader2 className='animate-spin w-[2.5rem] text-zinc-400' />
-      )}
-      {(!Geolocation && !savedCoordsString) && (
-        <Badge>Нет доступа к местоположению</Badge>
-      )}
-      {currentWeather && (
-        <CurrentWeather data={currentWeather} city={currentWeather.name} />
-      )}
-    </main>
-  );
+    <div className="grid sm:grid-cols-[auto,1fr] grid-cols-1 gap-4 sm:min-h-screen container mt-3 ">
+      <div>
+        <CurrentWeather data={current_weather} city={current_weather.location.name} />
+        {/* <HourlyForecast data={hourly_data.forecast} /> */}
+      </div>
+      <section className="grid h-full w-full grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
+        <AirPollution data={current_weather} />
+      </section>
+    </div>
+  )
 }
-

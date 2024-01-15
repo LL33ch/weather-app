@@ -1,240 +1,175 @@
-type Coordinates = {
-	lon: string
-	lat: string
-}
-export type Location = {
-	city: string
-	coord: Coordinates
-}
-
-export type CurrentLocation = {
-	ip: string
-	continent_code: string
-	continent_name: string
-	country_code2: string
-	country_code3: string
-	country_name: string
-	country_name_official: string
-	country_capital: string
-	state_prov: string
-	state_code: string
-	district: string
-	city: string
-	zipcode: string
-	latitude: string
-	longitude: string
-	is_eu: boolean
-	calling_code: string
-	country_tld: string
-	languages: string
-	country_flag: string
-	geoname_id: string
-	isp: string
-	connection_type: string
-	organization: string
-	currency: {
-		code: string
+export type CurrentWeatherData = {
+	location: {
 		name: string
-		symbol: string
-	}
-	time_zone: {
-		name: string
-		offset: number
-		offset_with_dst: number
-		current_time: string
-		current_time_unix: number
-		is_dst: boolean
-		dst_savings: number
-	}
-}
-
-export type OpenWeatherData = {
-	coord: {
-		lon: number
-		lat: number
-	}
-	weather: {
-		id: number
-		main: string
-		description: string
-		icon: string
-	}[]
-	base: string
-	main: {
-		temp: number
-		feels_like: number
-		temp_min: number
-		temp_max: number
-		pressure: number
-		humidity: number
-	}
-	visibility: number
-	wind: {
-		speed: number
-		deg: number
-	}
-	clouds: {
-		all: number
-	}
-	dt: number
-	sys: {
-		type: number
-		id: number
+		region: string
 		country: string
-		sunrise: number
-		sunset: number
+		lat: number
+		lon: number
+		tz_id: string
+		localtime_epoch: number
+		localtime: string
 	}
-	timezone: number
-	id: number
-	name: string
-	cod: number
+	current: {
+		last_updated_epoch: number
+		last_updated: string
+		temp_c: number
+		temp_f: number
+		is_day: number
+		condition: {
+			text: string
+			icon: string
+			code: number
+		}
+		wind_mph: number
+		wind_kph: number
+		wind_degree: number
+		wind_dir: string
+		pressure_mb: number
+		pressure_in: number
+		precip_mm: number
+		precip_in: number
+		humidity: number
+		cloud: number
+		feelslike_c: number
+		feelslike_f: number
+		vis_km: number
+		vis_miles: number
+		uv: number
+		gust_mph: number
+		gust_kph: number
+		air_quality: {
+			co: number
+			no2: number
+			o3: number
+			so2: number
+			pm2_5: number
+			pm10: number
+			"us-epa-index": number
+			"gb-defra-index": number
+		}
+	}
 }
 
 export type HourlyForecastData = {
-	dt: number
-	main: {
-		temp: number
-		feels_like: number
-		temp_min: number
-		temp_max: number
-		pressure: number
-		humidity: number
-	}
-	weather: {
-		id: number
-		main: string
-		description: string
-		icon: string
-	}[]
-	clouds: {
-		all: number
-	}
-	wind: {
-		speed: number
-		deg: number
-		gust: number
-	}
-	visibility: number
-	pop: number
-	rain?: {
-		"1h": number
-	}
-	sys: {
-		pod: "d" | "n"
-	}
-	dt_txt: string
-}
-
-export type HourlyForecastResponse = {
-	cod: string
-	message: number
-	cnt: number
-	list: HourlyForecastData[]
-	city: City
-}
-
-export type AirQualityData = {
-	dt: number
-	main: {
-		aqi: 1 | 2 | 3 | 4 | 5
-	}
-	components: {
-		co: number // Concentration of CO (Carbon monoxide), μg/m3
-		no: number // Concentration of NO (Nitrogen monoxide), μg/m3
-		no2: number // Concentration of NO2 (Nitrogen dioxide), μg/m3
-		o3: number // Concentration of O3 (Ozone), μg/m3
-		so2: number // Concentration of SO2 (Sulphur dioxide), μg/m3
-		pm2_5: number // Concentration of PM2.5 (Fine particles matter), μg/m3
-		pm10: number // Concentration of PM10 (Coarse particulate matter), μg/m3
-		nh3: number // Concentration of NH3 (Ammonia), μg/m3
-	}
-}
-
-export type AirPollutionResponse = {
-	coord: Coordinates
-	list: AirQualityData[]
-}
-
-type DailyUnits = {
-	time: string
-	uv_index_max: string
-}
-
-type DailyData = {
-	time: string[]
-	uv_index_max: number[]
-}
-
-export type UVIndexResponse = {
-	latitude: number
-	longitude: number
-	generationtime_ms: number
-	utc_offset_seconds: number
-	timezone: string
-	timezone_abbreviation: string
-	elevation: number
-	daily_units: DailyUnits
-	daily: DailyData
-}
-
-export type City = {
-	id: number
-	name: string
-	coord: {
-		lon: number
+	location: {
+		name: string
+		region: string
+		country: string
 		lat: number
+		lon: number
+		tz_id: string
+		localtime_epoch: number
+		localtime: string
 	}
-	country: string
-	population: number
-	timezone: number
-	sunrise: number
-	sunset: number
-}
-
-type Weather = {
-	id: number
-	main: string
-	description: string
-	icon: string
-}
-
-type Temperature = {
-	day: number
-	min: number
-	max: number
-	night: number
-	eve: number
-	morn: number
-}
-
-type FeelsLike = {
-	day: number
-	night: number
-	eve: number
-	morn: number
-}
-
-export type ForecastData = {
-	dt: number
-	sunrise: number
-	sunset: number
-	temp: Temperature
-	feels_like: FeelsLike
-	pressure: number
-	humidity: number
-	weather: Weather[]
-	speed: number
-	deg: number
-	gust: number
-	clouds: number
-	pop: number
-	rain?: number
-}
-
-export type TenDayForecastData = {
-	city: City
-	cod: string
-	message: number
-	cnt: number
-	list: ForecastData[]
+	current: {
+		last_updated_epoch: number
+		last_updated: string
+		temp_c: number
+		temp_f: number
+		is_day: number
+		condition: {
+			text: string
+			icon: string
+			code: number
+		}
+		wind_mph: number
+		wind_kph: number
+		wind_degree: number
+		wind_dir: string
+		pressure_mb: number
+		pressure_in: number
+		precip_mm: number
+		precip_in: number
+		humidity: number
+		cloud: number
+		feelslike_c: number
+		feelslike_f: number
+		vis_km: number
+		vis_miles: number
+		uv: number
+		gust_mph: number
+		gust_kph: number
+	}
+	forecast: {
+		forecastday: Array<{
+			date: string
+			date_epoch: number
+			day: {
+				maxtemp_c: number
+				maxtemp_f: number
+				mintemp_c: number
+				mintemp_f: number
+				avgtemp_c: number
+				avgtemp_f: number
+				maxwind_mph: number
+				maxwind_kph: number
+				totalprecip_mm: number
+				totalprecip_in: number
+				totalsnow_cm: number
+				avgvis_km: number
+				avgvis_miles: number
+				avghumidity: number
+				daily_will_it_rain: number
+				daily_chance_of_rain: number
+				daily_will_it_snow: number
+				daily_chance_of_snow: number
+				condition: {
+					text: string
+					icon: string
+					code: number
+				}
+				uv: number
+			}
+			astro: {
+				sunrise: string
+				sunset: string
+				moonrise: string
+				moonset: string
+				moon_phase: string
+				moon_illumination: number
+				is_moon_up: number
+				is_sun_up: number
+			}
+			hour: Array<{
+				time_epoch: number
+				time: string
+				temp_c: number
+				temp_f: number
+				is_day: number
+				condition: {
+					text: string
+					icon: string
+					code: number
+				}
+				wind_mph: number
+				wind_kph: number
+				wind_degree: number
+				wind_dir: string
+				pressure_mb: number
+				pressure_in: number
+				precip_mm: number
+				precip_in: number
+				snow_cm: number
+				humidity: number
+				cloud: number
+				feelslike_c: number
+				feelslike_f: number
+				windchill_c: number
+				windchill_f: number
+				heatindex_c: number
+				heatindex_f: number
+				dewpoint_c: number
+				dewpoint_f: number
+				will_it_rain: number
+				chance_of_rain: number
+				will_it_snow: number
+				chance_of_snow: number
+				vis_km: number
+				vis_miles: number
+				gust_mph: number
+				gust_kph: number
+				uv: number
+			}>
+		}>
+	}
 }

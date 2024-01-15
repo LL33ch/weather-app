@@ -5,6 +5,6 @@ module.exports = nextConfig
 
 module.exports = {
 	images: {
-		domains: ['openweathermap.org'],
+		domains: ['cdn.weatherapi.com'],
 	},
 }
