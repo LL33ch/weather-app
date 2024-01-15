@@ -24,8 +24,7 @@ export async function generateMetadata({ searchParams }: { searchParams: searchP
 			title: `${data.location.name} - Прогноз погоды`,
 			description: `${data.location.name} прогноз погоды с указанием текущих условий, ветра, качества воздуха и чего ожидать на ближайшие 5 дней.`,
 		};
-	} catch (error) {
-		console.error('Error generating metadata:', error.message);
+	} catch (error: unknown) {
 		return {
 			title: `Error`,
 		};
