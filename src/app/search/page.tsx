@@ -26,6 +26,9 @@ export async function generateMetadata({ searchParams }: { searchParams: searchP
 		};
 	} catch (error) {
 		console.error('Error generating metadata:', error.message);
+		return {
+			title: `Error`,
+		};
 	}
 }
 
