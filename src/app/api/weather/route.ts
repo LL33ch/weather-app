@@ -1,21 +1,23 @@
+import { NextResponse } from 'next/server'
+
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url)
 	const q = searchParams.get("q")
 	const key = searchParams.get("key")
 
 	if (!key) {
-		return Response.json(
+		return NextResponse.json(
 			{ message: "API key not found in environment variables" },
 			{ status: 401 }
 		)
 	}
 	if (!q) {
-		return Response.json({ message: "Missing parameters" }, { status: 400 })
+		return NextResponse.json({ message: "Missing parameters" }, { status: 400 })
 	}
 
-	const res = await fetch(`https://api.weatherapi.com/v1/current.json?q=${q}&lang=ru&aqi=yes&key=${key}`,
+	const res = await fetch(`https://api.weatherapi.com/v1/forecast.json?q=${q}&lang=ru&aqi=yes&day=2&key=${key}`,
 		{
-			next: { revalidate: 900 },
+			next: { revalidate: 1 },
 		}
 	)
 
@@ -25,5 +27,5 @@ export async function GET(request: Request) {
 
 	const data = await res.json()
 
-	return Response.json(data)
+	return NextResponse.json(data)
 }

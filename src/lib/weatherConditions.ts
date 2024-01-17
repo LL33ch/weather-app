@@ -4,28 +4,28 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"day": "Sunny",
 		"night": "Clear",
 		"icon": 113,
-		"img": 'img/sunny.jpg'
+		"img": 'img/sun.jpg'
 	},
 	{
 		"code": 1003,
 		"day": "Partly cloudy",
 		"night": "Partly cloudy",
 		"icon": 116,
-		"img": 'img/cloudy.jpg'
+		"img": 'img/clouds.jpg'
 	},
 	{
 		"code": 1006,
 		"day": "Cloudy",
 		"night": "Cloudy",
 		"icon": 119,
-		"img": 'img/cloudy.jpg'
+		"img": 'img/clouds.jpg'
 	},
 	{
 		"code": 1009,
 		"day": "Overcast",
 		"night": "Overcast",
 		"icon": 122,
-		"img": 'img/cloudy.jpg'
+		"img": 'img/clouds.jpg'
 	},
 	{
 		"code": 1030,
@@ -122,42 +122,42 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"day": "Light rain",
 		"night": "Light rain",
 		"icon": 296,
-		"img": 'img/rainy.jpg'
+		"img": 'img/rain.jpg'
 	},
 	{
 		"code": 1186,
 		"day": "Moderate rain at times",
 		"night": "Moderate rain at times",
 		"icon": 299,
-		"img": 'img/rainy.jpg'
+		"img": 'img/rain.jpg'
 	},
 	{
 		"code": 1189,
 		"day": "Moderate rain",
 		"night": "Moderate rain",
 		"icon": 302,
-		"img": 'img/rainy.jpg'
+		"img": 'img/rain.jpg'
 	},
 	{
 		"code": 1192,
 		"day": "Heavy rain at times",
 		"night": "Heavy rain at times",
 		"icon": 305,
-		"img": 'img/rainy.jpg'
+		"img": 'img/rain.jpg'
 	},
 	{
 		"code": 1195,
 		"day": "Heavy rain",
 		"night": "Heavy rain",
 		"icon": 308,
-		"img": 'img/rainy.jpg'
+		"img": 'img/rain.jpg'
 	},
 	{
 		"code": 1198,
 		"day": "Light freezing rain",
 		"night": "Light freezing rain",
 		"icon": 311,
-		"img": 'img/rainy.jpg'
+		"img": 'img/rain.jpg'
 	},
 	{
 		"code": 1201,
@@ -170,56 +170,56 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"day": "Light sleet",
 		"night": "Light sleet",
 		"icon": 317,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1207,
 		"day": "Moderate or heavy sleet",
 		"night": "Moderate or heavy sleet",
 		"icon": 320,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1210,
 		"day": "Patchy light snow",
 		"night": "Patchy light snow",
 		"icon": 323,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1213,
 		"day": "Light snow",
 		"night": "Light snow",
 		"icon": 326,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1216,
 		"day": "Patchy moderate snow",
 		"night": "Patchy moderate snow",
 		"icon": 329,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1219,
 		"day": "Moderate snow",
 		"night": "Moderate snow",
 		"icon": 332,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1222,
 		"day": "Patchy heavy snow",
 		"night": "Patchy heavy snow",
 		"icon": 335,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1225,
 		"day": "Heavy snow",
 		"night": "Heavy snow",
 		"icon": 338,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1237,
@@ -231,7 +231,8 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"code": 1240,
 		"day": "Light rain shower",
 		"night": "Light rain shower",
-		"icon": 353
+		"icon": 353,
+		"img": 'img/heavy-rain.jpg'
 	},
 	{
 		"code": 1243,
@@ -262,14 +263,14 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"day": "Light snow showers",
 		"night": "Light snow showers",
 		"icon": 368,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1258,
 		"day": "Moderate or heavy snow showers",
 		"night": "Moderate or heavy snow showers",
 		"icon": 371,
-		"img": 'img/snowy.jpg'
+		"img": 'img/snow.jpg'
 	},
 	{
 		"code": 1261,
