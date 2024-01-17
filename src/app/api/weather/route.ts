@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
 	const res = await fetch(`https://api.weatherapi.com/v1/forecast.json?q=${q}&lang=ru&aqi=yes&day=2&key=${key}`,
 		{
-			next: { revalidate: 1 },
+			next: { revalidate: 900 },
 		}
 	)
 
