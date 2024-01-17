@@ -8,8 +8,7 @@ export default async function Home() {
   const q = 'Краснодар'
 
   const WeatherDataRequest: WeatherData = await getWeatherData({ q })
-
-  const [weather] = await Promise.all([WeatherDataRequest])
+  const weather = WeatherDataRequest;
 
   return (
     <div className="grid sm:grid-cols-[auto,auto] grid-cols-1 gap-4">
