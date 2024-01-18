@@ -34,7 +34,7 @@ export default function CurrentWeather({ data, city }: CurrentWeatherProps) {
 			<CardFooter>
 				<div className='flex items-center gap-3'>
 					<Image
-						src={`https://${data.current.condition.icon}`}
+						src={`https:${data.current.condition.icon}`}
 						width={50}
 						height={50}
 						alt="Picture of the author"

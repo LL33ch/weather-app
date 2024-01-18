@@ -160,7 +160,7 @@ export default function HourlyForecast({ data }: HourlyForecastProps) {
 									</div>
 									<div className="flex items-center justify-center">
 										<Image
-											src={`https://${hour.condition.icon}`}
+											src={`https:${hour.condition.icon}`}
 											width={75}
 											height={75}
 											alt="Picture of the author"
