@@ -18,7 +18,7 @@ interface AirPollutionProps {
 
 export default function AirPollution({ data }: AirPollutionProps) {
 	return (
-		<Card className='justify-between bg-zinc-100 dark:bg-zinc-900/45'>
+		<Card className='justify-between bg-zinc-100 dark:bg-zinc-900/45 order-2 sm:-order-none'>
 			<CardHeader>
 				<CardTitle className='flex flex-row items-center gap-2 text-sm font-semibold text-neutral-600 dark:text-neutral-400 md:text-base md:font-medium'>
 					<Fan className="mr-2 h-4 w-4 flex self-center" />

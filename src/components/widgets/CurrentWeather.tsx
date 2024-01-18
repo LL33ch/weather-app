@@ -18,8 +18,8 @@ export default function CurrentWeather({ data, city }: CurrentWeatherProps) {
 
 	return (
 		<Card
-			className="relative sm:w-[19rem] w-full overflow-hidden bg-blue-500 text-white dark:bg-zinc-900/45 bg-cover backdrop-opacity-35">
-			<div className='absolute inset-0 -z-10 opacity-70 dark:opacity-35 bg-cover' style={{ backgroundImage: `url("${bgImage}")` }} />
+			className="relative sm:min-w-[19rem] w-full overflow-hidden bg-blue-500 text-white dark:bg-zinc-900/45 bg-cover backdrop-opacity-35">
+			<div className='absolute inset-0 -z-10 opacity-70 dark:opacity-35 bg-cover' style={{ backgroundImage: `url("../${bgImage}")` }} />
 			<CardHeader>
 				<CardTitle>{city}</CardTitle>
 				<CardDescription className='text-gray-200'>
@@ -38,6 +38,7 @@ export default function CurrentWeather({ data, city }: CurrentWeatherProps) {
 						width={50}
 						height={50}
 						alt="Picture of the author"
+						priority
 					/>
 					<div>
 						<span className='font-semibold'>{data.current.condition.text}</span>

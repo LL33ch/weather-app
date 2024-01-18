@@ -146,8 +146,15 @@ export default function HourlyForecast({ data }: HourlyForecastProps) {
 				<Carousel opts={{ dragFree: true, containScroll: 'trimSnaps', }} className='w-full'>
 					<CarouselContent className='-ml-1 grid grid-flow-col lg:auto-cols-[8%] md:auto-cols-[15%] auto-cols-[17%]'>
 						{data.forecast.forecastday[0].hour.map((hour) => (
-							<CarouselItem key={hour.time_epoch} className={`basis-[6%] py-3 pl-1 ${compareCurrentHour(hour.time_epoch) ? 'bg-zinc-200' : ''}`}>
-								<div className='p-1'>
+							<CarouselItem
+								key={hour.time_epoch}
+								className={`basis-[6%] py-3 pl-1 outline outline-1 outline-offset-0 outline-zinc-200 ${compareCurrentHour(hour.time_epoch) ? 'bg-zinc-200' : ''
+									} ${data.forecast.forecastday[0].day.daily_will_it_rain === 1 ||
+										data.forecast.forecastday[0].day.daily_will_it_snow === 1
+										? ''
+										: ''
+									}`}
+							>								<div className='p-1'>
 									<div className={`flex justify-center text-sm text-neutral-600 dark:text-neutral-400 ${compareCurrentHour(hour.time_epoch) ? 'font-medium' : ''}`}>
 										{extractHoursFromDate(hour.time_epoch)}
 									</div>

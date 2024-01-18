@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url)
@@ -6,13 +6,13 @@ export async function GET(request: Request) {
 	const key = searchParams.get("key")
 
 	if (!key) {
-		return NextResponse.json(
+		return Response.json(
 			{ message: "API key not found in environment variables" },
 			{ status: 401 }
 		)
 	}
 	if (!q) {
-		return NextResponse.json({ message: "Missing parameters" }, { status: 400 })
+		return Response.json({ message: "Missing parameters" }, { status: 400 })
 	}
 
 	const res = await fetch(`https://api.weatherapi.com/v1/forecast.json?q=${q}&lang=ru&aqi=yes&day=2&key=${key}`,
@@ -27,5 +27,5 @@ export async function GET(request: Request) {
 
 	const data = await res.json()
 
-	return NextResponse.json(data)
+	return Response.json(data)
 }

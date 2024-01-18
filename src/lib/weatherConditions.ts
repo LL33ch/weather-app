@@ -79,13 +79,15 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"code": 1135,
 		"day": "Fog",
 		"night": "Fog",
-		"icon": 248
+		"icon": 248,
+		"img": "img/fog.jpg"
 	},
 	{
 		"code": 1147,
 		"day": "Freezing fog",
 		"night": "Freezing fog",
-		"icon": 260
+		"icon": 260,
+		"img": "img/fog.jpg"
 	},
 	{
 		"code": 1150,
@@ -115,7 +117,8 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"code": 1180,
 		"day": "Patchy light rain",
 		"night": "Patchy light rain",
-		"icon": 293
+		"icon": 293,
+		"img": 'img/rain.jpg'
 	},
 	{
 		"code": 1183,
