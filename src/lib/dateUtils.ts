@@ -1,27 +1,19 @@
-export function convertToDate(
-	timezone: number,
-	dt: number,
-	weekdayFormat: "short" | "long"
-): string {
-	let utc_time = new Date(dt * 1000)
-	let local_time = new Date(utc_time.getTime() + timezone * 1000)
+export function convertUnixToDate(dateEpoch: number, type?: string): string {
+	const months = [
+		'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
+		'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'
+	];
+	const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
-	const options = { weekday: weekdayFormat }
-	const dateFormatter = new Intl.DateTimeFormat("UTC", options)
+	const dateInMillis = dateEpoch * 1000;
+	const dateObject = new Date(dateInMillis);
 
-	return dateFormatter.format(local_time)
-}
+	const day = dateObject.getDate();
+	const month = months[dateObject.getMonth()];
+	const dayOfWeekText = daysOfWeek[dateObject.getDay()]
 
-export function formatSunTimeWithAMPM(
-	timestamp: number,
-	timezoneOffset: number
-): string {
-	const date = new Date((timestamp + timezoneOffset) * 1000)
-	const formattedTime = new Intl.DateTimeFormat("en-US", {
-		timeZone: "UTC",
-		hour: "numeric",
-		minute: "2-digit",
-		hour12: false,
-	}).format(date)
-	return formattedTime
+	if (type === 'dayOfWeek') {
+		return `${dayOfWeekText}`
+	}
+	return `${day} ${month}`
 }

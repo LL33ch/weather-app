@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 		return Response.json({ message: "Missing parameters" }, { status: 400 })
 	}
 
-	const res = await fetch(`https://api.weatherapi.com/v1/forecast.json?q=${q}&lang=ru&aqi=yes&day=2&key=${key}`,
+	const res = await fetch(`https://api.weatherapi.com/v1/forecast.json?q=${q}&lang=ru&aqi=yes&days=2&key=${key}`,
 		{
 			next: { revalidate: 900 },
 		}

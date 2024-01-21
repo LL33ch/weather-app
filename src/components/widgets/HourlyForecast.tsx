@@ -8,8 +8,8 @@ import {
 	CarouselItem,
 } from "@/components/ui/carousel"
 import { Badge } from "@/components/ui/badge"
-import { convertUnixToDate } from '@/lib/utils';
-import { Progress } from '../ui/progress';
+import { convertUnixToDate } from '@/lib/dateUtils';
+import { CloudHail } from 'lucide-react';
 
 interface HourlyForecastProps {
 	data: WeatherData
@@ -121,42 +121,69 @@ interface HourlyForecast {
 }
 
 export default function HourlyForecast({ data }: HourlyForecastProps) {
-	function extractHoursFromDate(dt: number): string {
-		const date = new Date(dt * 1000)
-		const hours = date.getHours().toString().padStart(2, '0'); // Получаем часы и добавляем ведущий ноль при необходимости
-		const minutes = date.getMinutes().toString().padStart(2, '0'); // Получаем минуты и добавляем ведущий ноль при необходимости
+	const currentDate = new Date();
+	const currentHour = currentDate.getHours();
+	const currentDay = currentDate.getDate();
 
-		return `${hours}:${minutes}`;
+	function extractHMFromDate(dt: number, tz: string): string {
+		const date = new Date(dt * 1000);
+		const options: Intl.DateTimeFormatOptions = {
+			hour: '2-digit',
+			minute: '2-digit',
+			timeZone: tz,
+		};
+		const formattedTime = new Intl.DateTimeFormat('default', options).format(date);
+		return formattedTime;
+	}
+
+	function extractDayFromDate(dt: number): number {
+		const date = new Date(dt * 1000)
+		const day = date.getDate();
+		return day;
 	}
 
 	function compareCurrentHour(dateEpoch: number): boolean {
-		const currentDate = new Date();
-		const currentHour = currentDate.getHours();
-
 		const selectedDate = new Date(dateEpoch * 1000);
 		const selectedHour = selectedDate.getHours();
-
 		return currentHour === selectedHour;
 	}
 
+	const firstDayHoursArr = (data.forecast.forecastday[0].hour);
+	const secondDayHoursArr = (data.forecast.forecastday[1].hour);
+
+	const HoursArr = firstDayHoursArr.concat(secondDayHoursArr);
+	const croppedHoursArr = HoursArr.filter((hour, index) => index >= currentHour);
+	const getIndex = croppedHoursArr.findIndex((hours) => hours.time_epoch === data.forecast.forecastday[1].hour[0].time_epoch)
+
+	const willItRainNow = data.forecast.forecastday[0].hour[currentHour]?.will_it_rain;
+	const willItRainNextHour = data.forecast.forecastday[0].hour[currentHour + 1]?.will_it_rain;
+
 	return (
 		<div>
-			<div className='mb-2 font-medium'>Почасовой прогноз <Badge variant="outline">{convertUnixToDate(data.forecast.forecastday[0].date_epoch)}</Badge></div>
+			<div className='block md:hidden text-center mb-3'>
+				{(willItRainNow && willItRainNextHour) ? <Badge variant="secondary" className='text-base'><CloudHail className='h-5 w-5 me-1' /> В течении 2 часов дождь не прекратится</Badge> : null}
+				{(!willItRainNow && willItRainNextHour) ? <Badge variant="secondary" className='text-base'><CloudHail className='h-5 w-5 me-1' /> В течении 2 часов начнётся дождь</Badge> : null}
+				{(willItRainNow && !willItRainNextHour) ? <Badge variant="secondary" className='text-base'><CloudHail className='h-5 w-5 me-1' /> В течении 2 часов дождь прекратится</Badge> : null}
+			</div>
+			<div className='mb-1 font-medium flex justify-between'>
+				<div>Почасовой прогноз <Badge variant="outline">{convertUnixToDate(data.forecast.forecastday[0].date_epoch)} и {convertUnixToDate(data.forecast.forecastday[1].date_epoch)}</Badge></div>
+				<div className='hidden md:block'>
+					{(willItRainNow && willItRainNextHour) ? <Badge variant="secondary"><CloudHail className='h-5 w-5 me-1' /> В течении 2 часов дождь не прекратится</Badge> : null}
+					{(!willItRainNow && willItRainNextHour) ? <Badge variant="secondary"><CloudHail className='h-5 w-5 me-1' /> В течении 2 часов начнётся дождь</Badge> : null}
+					{(willItRainNow && !willItRainNextHour) ? <Badge variant="secondary"><CloudHail className='h-5 w-5 me-1' /> В течении 2 часов дождь прекратится</Badge> : null}
+				</div>
+			</div>
 			<Card className='order-2 h-fit bg-zinc-100 dark:bg-zinc-900/45 cursor-grab '>
 				<Carousel opts={{ dragFree: true, containScroll: 'trimSnaps', }} className='w-full'>
 					<CarouselContent className='-ml-1 grid grid-flow-col lg:auto-cols-[8%] md:auto-cols-[15%] auto-cols-[17%]'>
-						{data.forecast.forecastday[0].hour.map((hour) => (
+						{croppedHoursArr.map((hour, index) => (
 							<CarouselItem
 								key={hour.time_epoch}
-								className={`basis-[6%] py-3 pl-1 outline outline-1 outline-offset-0 outline-zinc-200 ${compareCurrentHour(hour.time_epoch) ? 'bg-zinc-200' : ''
-									} ${data.forecast.forecastday[0].day.daily_will_it_rain === 1 ||
-										data.forecast.forecastday[0].day.daily_will_it_snow === 1
-										? ''
-										: ''
-									}`}
-							>								<div className='p-1'>
-									<div className={`flex justify-center text-sm text-neutral-600 dark:text-neutral-400 ${compareCurrentHour(hour.time_epoch) ? 'font-medium' : ''}`}>
-										{extractHoursFromDate(hour.time_epoch)}
+								className={`basis-[6%] py-3 pl-1 outline outline-1 outline-offset-0 outline-zinc-200 
+								${getIndex == index ? 'border-l-4 border-zinc-300' : ''}`}>
+								<div className='p-1'>
+									<div className={`flex justify-center text-sm text-neutral-600 dark:text-neutral-400 ${(compareCurrentHour(hour.time_epoch) && currentDay == extractDayFromDate(hour.time_epoch)) ? 'font-medium' : null}`}>
+										{extractHMFromDate(hour.time_epoch, `${data.location.tz_id}`)}
 									</div>
 									<div className="flex items-center justify-center">
 										<Image
@@ -166,7 +193,7 @@ export default function HourlyForecast({ data }: HourlyForecastProps) {
 											alt="Picture of the author"
 										/>
 									</div>
-									<div className={`flex justify-center ${compareCurrentHour(hour.time_epoch) ? 'font-medium' : ''}`}>
+									<div className={`flex justify-center ${(compareCurrentHour(hour.time_epoch) && currentDay == extractDayFromDate(hour.time_epoch)) ? 'font-medium' : null}`}>
 										{Math.floor(hour.temp_c)}&deg;
 									</div>
 								</div>

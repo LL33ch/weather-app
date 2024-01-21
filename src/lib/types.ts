@@ -153,3 +153,13 @@ export type WeatherData = {
 		}>
 	}
 }
+
+export type SearchData = Array<{
+	id: number
+	name: string
+	region: string
+	country: string
+	lat: number
+	lon: number
+	url: string
+}>

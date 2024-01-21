@@ -16,15 +16,20 @@ function setBgMap(code: number): string {
 export default function CurrentWeather({ data, city }: CurrentWeatherProps) {
 	const bgImage = setBgMap(data.current.condition.code);
 
+
 	return (
 		<Card
-			className="relative sm:min-w-[19rem] w-full overflow-hidden bg-blue-500 text-white dark:bg-zinc-900/45 bg-cover backdrop-opacity-35">
+			className="relative sm:min-w-[19rem] w-full h-full overflow-hidden bg-blue-500 text-white dark:bg-zinc-900/45 bg-cover backdrop-opacity-35">
 			<div className='absolute inset-0 -z-10 opacity-70 dark:opacity-35 bg-cover' style={{ backgroundImage: `url("../${bgImage}")` }} />
 			<CardHeader>
-				<CardTitle>{city}</CardTitle>
-				<CardDescription className='text-gray-200'>
-					{data.location.country}
-				</CardDescription>
+				<div className='flex justify-between'>
+					<div>
+						<CardTitle>{city}</CardTitle>
+						<CardDescription className='text-gray-200'>
+							{data.location.country}
+						</CardDescription>
+					</div>
+				</div>
 			</CardHeader>
 			<CardContent>
 				<div className="flex justify-center py-7 text-8xl font-medium px-10">

@@ -291,24 +291,28 @@ export const weatherConditions: Array<{ code: number; day: string; night: string
 		"code": 1273,
 		"day": "Patchy light rain with thunder",
 		"night": "Patchy light rain with thunder",
-		"icon": 386
+		"icon": 386,
+		"img": "/img/thunder.jpg"
 	},
 	{
 		"code": 1276,
 		"day": "Moderate or heavy rain with thunder",
 		"night": "Moderate or heavy rain with thunder",
-		"icon": 389
+		"icon": 389,
+		"img": "/img/thunder.jpg"
 	},
 	{
 		"code": 1279,
 		"day": "Patchy light snow with thunder",
 		"night": "Patchy light snow with thunder",
-		"icon": 392
+		"icon": 392,
+		"img": "/img/thunder.jpg"
 	},
 	{
 		"code": 1282,
 		"day": "Moderate or heavy snow with thunder",
 		"night": "Moderate or heavy snow with thunder",
-		"icon": 395
+		"icon": 395,
+		"img": "/img/thunder.jpg"
 	}
 ]
